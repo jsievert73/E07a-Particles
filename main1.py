@@ -14,18 +14,23 @@ SCREEN_HEIGHT = 600
 MARGIN = 30
 SCREEN_TITLE = "Particle Exercise"
 
-PARTICLE_MIN_SCALE = 0.01
-PARTICLE_MAX_SCALE = 0.08
+PARTICLE_MIN_SCALE = 0.03
+PARTICLE_MAX_SCALE = 0.04
 PARTICLE_MIN_X = -20
 PARTICLE_MAX_X = 20
-PARTICLE_VELOCITY_X = 0
-PARTICLE_VELOCITY_Y = 4
-PARTICLE_MIN_AX = -0.1
-PARTICLE_MAX_AX = 0.1
-PARTICLE_MIN_AY = -0.1
-PARTICLE_MAX_AY = 0.1
+PARTICLE_MIN_Y = -20
+PARTICLE_MAX_Y = 20
+PARTICLE_MIN_VELOCITY_X = -3
+PARTICLE_MAX_VELOCITY_X = 3
+PARTICLE_MIN_VELOCITY_Y = -3
+PARTICLE_MAX_VELOCITY_Y = 3
+PARTICLE_MIN_AX = -1
+PARTICLE_MAX_AX = 1
+PARTICLE_MIN_AY = -1
+PARTICLE_MAX_AY = 1
 PARTICLE_MIN_DECAY = 0.001
 PARTICLE_MAX_DECAY = 0.01
+PARTICLES_PER_TICK = 3
 
 
 class Particle(arcade.Sprite):
@@ -41,16 +46,21 @@ class Particle(arcade.Sprite):
         self.color_pos = 0
 
         self.particle_colors = [
-            (open_color.red_5, 4)
-            ,(open_color.red_4, 5)
-            ,(open_color.red_3, 6)
-            ,(open_color.red_2, 7)
-            ,(open_color.red_1, 8)
-            ,(open_color.teal_1, 8)
-            ,(open_color.teal_2, 7)
-            ,(open_color.teal_3, 6)
-            ,(open_color.teal_4, 5)
-            ,(open_color.teal_5, 4)
+            (open_color.red_9, 8)
+            ,(open_color.red_8, 5)
+            ,(open_color.red_7, 6)
+            ,(open_color.red_6, 7)
+            ,(open_color.red_5, 8)
+            ,(open_color.orange_4, 8)
+            ,(open_color.orange_8, 7)
+            ,(open_color.orange_7, 6)
+            ,(open_color.orange_6, 5)
+            ,(open_color.orange_5, 4)
+            ,(open_color.yellow_3, 8)
+            ,(open_color.yellow_4, 7)
+            ,(open_color.yellow_7, 6)
+            ,(open_color.yellow_6, 5)
+            ,(open_color.yellow_5, 4)
         ]
         (self.color, self.lifetime) = self.particle_colors[self.color_pos]
         self.alive = True
@@ -100,19 +110,22 @@ class Window(arcade.Window):
     def update(self, delta_time):
         self.particle_list.update()
         if self.mouse_down:
-            #generate a new particle
-            x = self.x + random.uniform(PARTICLE_MIN_X, PARTICLE_MAX_X)
-            y = self.y
-            dx = PARTICLE_VELOCITY_X
-            dy = PARTICLE_VELOCITY_Y
-            ax = random.uniform(PARTICLE_MIN_AX,PARTICLE_MAX_AX)
-            ay = random.uniform(PARTICLE_MIN_AY,PARTICLE_MAX_AY)
-            decay = random.uniform(PARTICLE_MIN_DECAY,PARTICLE_MAX_DECAY)
-            scale = random.uniform(PARTICLE_MIN_SCALE,PARTICLE_MAX_SCALE)
-            #Particle(asset, sprite scale, initial position [x], initial position [y], velocity [x], velocity [y], acceleration [x], acceleration [y], scale decay)
-            particle = Particle('circle_05',scale,x,y,dx,dy,ax,ay,decay)
+            particlesmade = 0
+            while particlesmade < PARTICLES_PER_TICK:
+                #generate a new particle
+                x = self.x + random.uniform(PARTICLE_MIN_X, PARTICLE_MAX_X)
+                y = self.y +random.uniform(PARTICLE_MIN_Y, PARTICLE_MAX_Y)
+                dx = random.uniform(PARTICLE_MIN_VELOCITY_X, PARTICLE_MAX_VELOCITY_X)
+                dy = random.uniform(PARTICLE_MIN_VELOCITY_Y, PARTICLE_MAX_VELOCITY_Y)
+                ax = random.uniform(PARTICLE_MIN_AX,PARTICLE_MAX_AX)
+                ay = random.uniform(PARTICLE_MIN_AY,PARTICLE_MAX_AY)
+                decay = random.uniform(PARTICLE_MIN_DECAY,PARTICLE_MAX_DECAY)
+                scale = random.uniform(PARTICLE_MIN_SCALE,PARTICLE_MAX_SCALE)
+                #Particle(asset, sprite scale, initial position [x], initial position [y], velocity [x], velocity [y], acceleration [x], acceleration [y], scale decay)
+                particle = Particle('circle_05',scale,x,y,dx,dy,ax,ay,decay)
 
-            self.particle_list.append(particle)
+                self.particle_list.append(particle)
+                particlesmade += 1
 
         for p in self.particle_list:
             #if the particle is off the edge of the screen, kill it
