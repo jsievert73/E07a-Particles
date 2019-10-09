@@ -30,7 +30,7 @@ PARTICLE_MIN_AY = -1
 PARTICLE_MAX_AY = 1
 PARTICLE_MIN_DECAY = 0.001
 PARTICLE_MAX_DECAY = 0.01
-PARTICLES_PER_TICK = 3
+PARTICLES_PER_TICK = 20
 
 
 class Particle(arcade.Sprite):
@@ -48,7 +48,11 @@ class Particle(arcade.Sprite):
         self.particle_colors = [
             (open_color.red_9, 8)
             ,(open_color.red_8, 5)
-            ,(open_color.red_7, 6)
+            ,(open_color.yellow_3, 8)
+            ,(open_color.yellow_4, 7)
+            ,(open_color.yellow_7, 6)
+            ,(open_color.yellow_6, 5)
+            ,(open_color.yellow_5, 4)
             ,(open_color.red_6, 7)
             ,(open_color.red_5, 8)
             ,(open_color.orange_4, 8)
@@ -56,11 +60,7 @@ class Particle(arcade.Sprite):
             ,(open_color.orange_7, 6)
             ,(open_color.orange_6, 5)
             ,(open_color.orange_5, 4)
-            ,(open_color.yellow_3, 8)
-            ,(open_color.yellow_4, 7)
-            ,(open_color.yellow_7, 6)
-            ,(open_color.yellow_6, 5)
-            ,(open_color.yellow_5, 4)
+            ,(open_color.red_7, 6)
         ]
         (self.color, self.lifetime) = self.particle_colors[self.color_pos]
         self.alive = True
